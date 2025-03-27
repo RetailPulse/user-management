@@ -1,4 +1,4 @@
-name: RetailPulse Backend CI Pipeline
+name: RetailPulse User Management CI Pipeline
 
 env:
   JAVA_VERSION: '23'          # Centralized JDK version
@@ -18,7 +18,29 @@ on:
       - reopened
 
 jobs:
-  backend-unit-tests:
+  user-management-unit-tests:      
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: ${{ env.DISTRIBUTION }}
+        cache: ${{ env.MAVEN_CACHE }}
+        
+    - name: Clean User Management
+      run: mvn clean --file pom.xml
+
+    - name: Build User Management
+      run: mvn --batch-mode -DskipTests package --file pom.xml
+
+    - name: Test User Management
+      run: mvn --batch-mode test --file pom.xml
+
+  user-management-sonarqube-scan:
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
