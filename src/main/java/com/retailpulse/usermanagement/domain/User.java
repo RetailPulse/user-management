@@ -1,6 +1,8 @@
 package com.retailpulse.usermanagement.domain;
-
 import com.retailpulse.usermanagement.domain.exception.MalformedEmailException;
+
+import org.apache.commons.validator.routines.EmailValidator;
+
 import lombok.Getter;
 
 import java.util.Collections;
@@ -105,8 +107,8 @@ public class User {
     }
 
     private void validateEmailPattern(String email) {
-        if (!email.matches("^(.+)@(.+)$")) {
-            throw new MalformedEmailException("Invalid email format");
+        if (!EmailValidator.getInstance().isValid(email)) {
+            throw new MalformedEmailException("Invalid email format: " + email);
         }
     }
 }
