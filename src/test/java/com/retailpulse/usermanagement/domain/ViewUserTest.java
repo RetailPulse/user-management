@@ -33,7 +33,7 @@ public class ViewUserTest {
         User user = new User.Builder("username")
                 .password(bCryptPasswordEncoder.encode("password"))
                 .name("name")
-                .email("email@email")
+                .email("email@email.com")
                 .authorities(authorities).build();
 
         UserEntity userEntity = UserMapper.toEntity(user);
@@ -61,7 +61,7 @@ public class ViewUserTest {
         User user = new User.Builder("username")
                 .password(bCryptPasswordEncoder.encode("password"))
                 .name("name")
-                .email("email@email")
+                .email("email@email.com")
                 .authorities(authorities).build();
 
         UserEntity userEntity = UserMapper.toEntity(user);
