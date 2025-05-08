@@ -36,16 +36,18 @@ public class UserController {
 
     @GetMapping("/username/{username}")
     public ResponseEntity<ViewUserDTO> getUserByUsername(@PathVariable String username) {
-        logger.info("Fetching user with username: " + username);
-        return userService.getUserByUsername(username)
+        String safeUsername = username.replaceAll("[\n\r]", "_");
+        logger.info("Fetching user with username: " + safeUsername);
+        return userService.getUserByUsername(safeUsername)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/search")
     public ResponseEntity<ViewUserDTO> getUserByName(@RequestParam String name) {
-        logger.info("Fetching user with name: " + name);
-        return userService.getUserByName(name)
+        String safeName = name.replaceAll("[\n\r]", "_");
+        logger.info("Fetching user with name: " + safeName);
+        return userService.getUserByName(safeName)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
