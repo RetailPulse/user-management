@@ -10,7 +10,7 @@ data:
 
     auth:
       enabled: false
-      origin: "http://localhost:30080" #"http://localhost:4200" #
+      origin: "http://localhost:4200" # "http://localhost:30080" #
       jwt:
         key:
           set:
@@ -60,7 +60,8 @@ spec:
     spec:
       containers:
       - image: docker.io/casperyap/rp-user-app:v0.1.0
-        name: myapp        
+        name: app-rp-user
+        imagePullPolicy: Always
         volumeMounts:
         - name: config-volume
           mountPath: /app/config
