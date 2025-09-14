@@ -23,7 +23,7 @@ logging:
     root: INFO
     org:
       springframework:
-        security: TRACE
+        security: INFO
     com.retailpulse: DEBUG
   file:
     name: logs/user-management.log
