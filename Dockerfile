@@ -18,10 +18,10 @@ FROM eclipse-temurin:24-jdk-alpine AS runner
 WORKDIR /app
 
 # Copy the built JAR from the builder stage
-COPY --from=builder /app/target/retailpulse-user-management-1.0.0-SNAPSHOT.jar retailpulse-user-management-1.0.0-SNAPSHOT.jar
+COPY --from=builder /app/target/*.jar app.jar
 
 # Expose the application port
-EXPOSE 8083
+EXPOSE 8082
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "retailpulse-user-management-1.0.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

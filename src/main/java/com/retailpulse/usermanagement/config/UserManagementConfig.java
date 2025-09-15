@@ -28,6 +28,15 @@ public class UserManagementConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // Disable CSRF for stateless API
+    http.csrf(c -> c.disable());
+
+    // Enable CORS
+    
+    http.cors(c -> {
+      c.configurationSource(corsConfigurationSource());
+    });
+
     if (authEnabled) {
       http.oauth2ResourceServer(
           c -> c.jwt(
@@ -41,14 +50,11 @@ public class UserManagementConfig {
           .requestMatchers("/api/**").authenticated()
       );
     } else {
+      System.out.println("No auth enabled");
       http.authorizeHttpRequests(
         c -> c.anyRequest().permitAll()
       );
     }
-
-    http.cors(c -> {
-      c.configurationSource(corsConfigurationSource());
-    });
 
     return http.build();
   }
