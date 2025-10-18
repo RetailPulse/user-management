@@ -103,7 +103,7 @@
         </plugins>
     </build>
 
-    <dependencies>
+    <dependencies>        
         <!-- Lombok dependency -->
         <dependency>
             <groupId>org.projectlombok</groupId>

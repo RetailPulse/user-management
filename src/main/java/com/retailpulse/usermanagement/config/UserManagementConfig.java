@@ -44,11 +44,14 @@ public class UserManagementConfig {
           )
       );
 
-      http.authorizeHttpRequests(
-        c -> c
-          .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-          .requestMatchers("/api/**").authenticated()
+      http.authorizeHttpRequests(c -> c
+        // Permit actuator endpoints (GET and OPTIONS)
+        .requestMatchers(HttpMethod.GET, "/actuator/health", "/actuator/info", "/actuator/prometheus").permitAll()
+        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+        // Secure all API endpoints
+        .requestMatchers("/api/**").authenticated()
       );
+
     } else {
       System.out.println("No auth enabled");
       http.authorizeHttpRequests(
