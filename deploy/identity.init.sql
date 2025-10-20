@@ -1,7 +1,15 @@
 -- CREATE DATABASE identity_access;
 -- GRANT ALL PRIVILEGES ON identity_access.* TO 'root'@'localhost';
 -- FLUSH PRIVILEGES;
+CREATE DATABASE IF NOT EXISTS RPUserDB;
 
+USE RPUserDB;
+
+DROP TABLE IF EXISTS `oauth2_authorization_consent`;
+DROP TABLE IF EXISTS `oauth2_authorization`;
+DROP TABLE IF EXISTS `oauth2_registered_client`;
+DROP TABLE IF EXISTS `authorities`;
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(45) NOT NULL UNIQUE,
