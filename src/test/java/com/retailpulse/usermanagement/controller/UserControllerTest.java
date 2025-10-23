@@ -31,7 +31,7 @@ public class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     public void setUp() {

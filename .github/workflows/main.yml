@@ -9,48 +9,51 @@ on:
   workflow_dispatch:
 
   push:
-    branches: 
-      - "main"
-  # pull_request:
-  #   branches:
-  #     - "main" # Trigger on pull requests targeting the "stage" branch
-  #   types:
-  #     - opened
-  #     - synchronize
-  #     - reopened
+    branches:
+      - develop
+      - main
+
+  pull_request:
+    branches:
+      - develop
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   user-management-unit-tests:
     name: User Management Unit Test
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v4
 
-    - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        java-version: ${{ env.JAVA_VERSION }}
-        distribution: ${{ env.DISTRIBUTION }}
-        cache: ${{ env.MAVEN_CACHE }}
-        
-    - name: Clean User Management
-      run: mvn clean --file pom.xml
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.DISTRIBUTION }}
+          cache: ${{ env.MAVEN_CACHE }}
 
-    - name: Build User Management
-      run: mvn --batch-mode -DskipTests package --file pom.xml
+      - name: Clean User Management
+        run: mvn clean --file pom.xml
 
-    - name: Test User Management
-      run: mvn --batch-mode test --file pom.xml
+      - name: Build User Management
+        run: mvn --batch-mode -DskipTests package --file pom.xml
 
-    - name: Generate Coverage Report
-      run: mvn jacoco:report --file pom.xml
+      - name: Test User Management
+        run: mvn --batch-mode test --file pom.xml
 
-    - name: Upload Code Coverage Report as Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage-report
-        path: target/site/jacoco/
+      - name: Generate Coverage Report
+        run: mvn jacoco:report --file pom.xml
+
+      - name: Upload Code Coverage Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report
+          path: target/site/jacoco/
 
   user-management-sonarqube-scan:
     name: User Management SonarQube Scan
@@ -82,11 +85,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-     
+
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
   
   user-management-snyk-scan:
     name: User Management Snyk Scan
@@ -114,6 +117,6 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities (non-blocking)
         run: snyk test --all-projects --org=retailpulse --severity-threshold=low || true
-      
+
       - name: Monitor project in Snyk dashboard
         run: snyk monitor --all-projects --org=retailpulse
