@@ -47,8 +47,8 @@ public class ViewUserTest {
 
         assertThat(users).isNotEmpty();
         assertThat(users).hasSize(1);
-        assertThat(users.get(0).getUsername()).isEqualTo("username");
-        assertThat(bCryptPasswordEncoder.matches("password", users.get(0).getPassword())).isTrue();
+        assertThat(users.getFirst().getUsername()).isEqualTo("username");
+        assertThat(bCryptPasswordEncoder.matches("password", users.getFirst().getPassword())).isTrue();
     }
 
     @Test

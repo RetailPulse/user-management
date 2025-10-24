@@ -38,13 +38,13 @@ public class DeleteUserTest {
 
         UserEntity userEntity = UserMapper.toEntity(user);
 
-        when(userRepository.getById(any())).thenReturn(userEntity);
+        when(userRepository.getReferenceById(any())).thenReturn(userEntity);
     }
 
     @Test
     public void deleteUser() {
         // Given
-        UserEntity savedUserEntity = userRepository.getById(1L);
+        UserEntity savedUserEntity = userRepository.getReferenceById(1L);
         User savedUser = UserMapper.toDomain(savedUserEntity);
         UserEntity userEntity = UserMapper.toEntity(savedUser);
 
