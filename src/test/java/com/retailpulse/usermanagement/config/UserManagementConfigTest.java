@@ -43,7 +43,6 @@ public class UserManagementConfigTest {
                     "auth.enabled=true",
                     "auth.jwt.key.set.uri=https://example.invalid/jwks",
                     "auth.origin=http://test-origin.example",
-                    // keep real Actuator off to avoid conflicts with our stub
                     "management.endpoints.enabled-by-default=false"
             }
     )

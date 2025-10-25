@@ -45,13 +45,13 @@ public class UpdateUserTest {
 
         UserEntity userEntity = UserMapper.toEntity(user);
 
-        when(userRepository.getById(any())).thenReturn(userEntity);
+        when(userRepository.getReferenceById(any())).thenReturn(userEntity);
     }
 
     @Test
     public void updatePassword() {
         // Given
-        UserEntity savedUserEntity = userRepository.getById(1L);
+        UserEntity savedUserEntity = userRepository.getReferenceById(1L);
         User savedUser = UserMapper.toDomain(savedUserEntity);
 
         // Given
@@ -76,7 +76,7 @@ public class UpdateUserTest {
     @Test
     public void updateRoles() {
         // Given
-        UserEntity savedUserEntity = userRepository.getById(1L);
+        UserEntity savedUserEntity = userRepository.getReferenceById(1L);
         User savedUser = UserMapper.toDomain(savedUserEntity);
 
         // Given
@@ -99,7 +99,7 @@ public class UpdateUserTest {
     @Test
     public void updateName() {
         // Given
-        UserEntity savedUserEntity = userRepository.getById(1L);
+        UserEntity savedUserEntity = userRepository.getReferenceById(1L);
         User savedUser = UserMapper.toDomain(savedUserEntity);
 
         // Given
@@ -119,22 +119,20 @@ public class UpdateUserTest {
     @Test
     public void updateWrongFormatEmail() {
         // Given
-        UserEntity savedUserEntity = userRepository.getById(1L);
+        UserEntity savedUserEntity = userRepository.getReferenceById(1L);
         User savedUser = UserMapper.toDomain(savedUserEntity);
 
         // Given
         String newEmail = "newEmail";
 
         assertThrows(MalformedEmailException.class,
-                () -> {
-                    savedUser.updateEmail(newEmail);
-                }, "Email must be in the correct format");
+                () -> savedUser.updateEmail(newEmail), "Email must be in the correct format");
     }
 
     @Test
     public void updateEmail() {
         // Given
-        UserEntity savedUserEntity = userRepository.getById(1L);
+        UserEntity savedUserEntity = userRepository.getReferenceById(1L);
         User savedUser = UserMapper.toDomain(savedUserEntity);
 
         // Given
@@ -153,7 +151,7 @@ public class UpdateUserTest {
     @Test
     public void updateEnabled() {
         // Given
-        UserEntity savedUserEntity = userRepository.getById(1L);
+        UserEntity savedUserEntity = userRepository.getReferenceById(1L);
         User savedUser = UserMapper.toDomain(savedUserEntity);
 
         // Given
